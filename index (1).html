@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Roster — Big Five Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f4ebd9;
+    --paper-deep: #ebe0c8;
+    --accent: #d94f1e;
+    --accent-warm: #e8a317;
+    --green: #2d6b3f;
+    --blue: #2d4a6b;
+    --purple: #6b2d5c;
+    --mute: #8a7d6a;
+    --rule: #1a1410;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-feature-settings: "ss01", "ss02";
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(26,20,16,0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  /* HEADER */
+  header {
+    padding: 48px 32px 32px;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+    background: var(--paper);
+  }
+
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+    color: var(--mute);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(56px, 12vw, 160px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+  }
+
+  h1 .ital {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .subhead {
+    margin-top: 24px;
+    max-width: 580px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  /* LEGEND */
+  .legend {
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 32px;
+    background: var(--paper-deep);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .legend-section h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    color: var(--mute);
+  }
+
+  .legend-section p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .legend-section strong {
+    font-weight: 700;
+    background: var(--accent-warm);
+    padding: 0 4px;
+  }
+
+  /* DISCLAIMER STRIP */
+  .disclaimer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .disclaimer em {
+    color: var(--accent-warm);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    padding: 24px 32px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid var(--ink);
+  }
+  .filter-bar .filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mute);
+    margin-right: 8px;
+  }
+  .filter-btn {
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    padding: 6px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .filter-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .filter-btn.active {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  /* GRID */
+  .roster {
+    padding: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+  }
+
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .card.expanded {
+    grid-column: 1 / -1;
+    cursor: default;
+    transform: none;
+    box-shadow: 8px 8px 0 var(--accent);
+    background: var(--paper-deep);
+  }
+  .card.expanded:hover { transform: none; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .card-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+  }
+
+  .card-name .alias {
+    display: block;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--mute);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+
+  .rating {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .rating.r-high { background: var(--green); }
+  .rating.r-mid { background: var(--blue); }
+  .rating.r-low { background: var(--accent); }
+  .rating.r-vlow { background: var(--purple); }
+
+  /* STAT BARS */
+  .stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .stat {
+    display: grid;
+    grid-template-columns: 70px 1fr 32px;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stat-label { color: var(--mute); }
+
+  .stat-bar {
+    height: 10px;
+    background: var(--paper-deep);
+    border: 1px solid var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .card.expanded .stat-bar { background: var(--paper); }
+
+  .stat-fill {
+    height: 100%;
+    background: var(--ink);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .stat-fill.f-1 { background: var(--green); }
+  .stat-fill.f-2 { background: var(--accent); }
+  .stat-fill.f-3 { background: var(--accent-warm); }
+  .stat-fill.f-4 { background: var(--blue); }
+  .stat-fill.f-5 { background: var(--purple); }
+
+  .stat-val {
+    font-weight: 700;
+    text-align: right;
+    color: var(--ink);
+  }
+
+  /* TAGS */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 7px;
+    border: 1px solid var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .tag.standout { background: var(--accent-warm); font-weight: 700; }
+  .tag.balanced { background: var(--paper-deep); }
+  .tag.weak { background: transparent; color: var(--mute); border-color: var(--mute); }
+
+  /* EXPANDED */
+  .card-detail {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed var(--ink);
+  }
+  .card.expanded .card-detail { display: block; }
+  .card.expanded .card-summary { display: none; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .detail-section h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mute);
+    margin-bottom: 10px;
+  }
+
+  .detail-section p, .detail-section li {
+    font-size: 16px;
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+
+  .detail-section ul { padding-left: 20px; }
+  .detail-section .may { color: var(--accent); font-style: italic; font-weight: 600; }
+  .detail-section .contradiction {
+    background: var(--accent-warm);
+    padding: 2px 6px;
+    font-style: italic;
+  }
+  .detail-section blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+    margin: 12px 0;
+    font-style: italic;
+    color: var(--mute);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    display: none;
+  }
+  .card.expanded .close-btn { display: block; }
+  .close-btn:hover { background: var(--accent); }
+
+  /* CARD SUMMARY (bottom blurb) */
+  .card-summary {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 2px solid var(--ink);
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--paper-deep);
+  }
+
+  footer .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    max-width: 640px;
+    margin: 0 auto 16px;
+    line-height: 1.4;
+  }
+
+  footer .credit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mute);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 32px 20px 20px; }
+    .legend, .roster { padding: 20px; }
+    .filter-bar { padding: 16px 20px; }
+    h1 { font-size: 64px; }
+  }
+
+  /* DECORATIVE */
+  .stamp {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    padding: 8px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    transform: rotate(8deg);
+    background: var(--paper);
+  }
+  @media (max-width: 700px) { .stamp { display: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <span>Vol. I &nbsp;·&nbsp; Edition 01</span>
+    <span>Big Five Factor Markers</span>
+    <span>For internal circulation</span>
+  </div>
+  <h1>The <span class="ital">Roster</span>.</h1>
+  <p class="subhead">A field guide to everyone's IPIP-BFFM results — softened for human consumption, annotated with all the times reality politely told the test it was wrong.</p>
+  <div class="stamp">Confidential ✦ Friends Only</div>
+</header>
+
+<div class="disclaimer">
+  These describe <em>tendencies</em>, not verdicts. Someone scoring low on a thing <em>may</em> lean a certain way — they aren't doomed to it.
+</div>
+
+<section class="legend">
+  <div class="legend-section">
+    <h3>Score Vocab</h3>
+    <p><strong>Chode</strong> · ~60th %ile. Balanced, not extreme. Often a good thing.</p>
+    <p><strong>2σ / Chad</strong> · ~85–95th %ile. Standout, top of the curve.</p>
+    <p><strong>X / 5 rating</strong> · vibe of how well-rounded the profile is.</p>
+  </div>
+  <div class="legend-section">
+    <h3>Why "Chode" is Good</h3>
+    <p>Too high on <em>Conscientiousness</em> = perfectionist & rigid.</p>
+    <p>Too high on <em>Agreeableness</em> = pushover, no assertiveness.</p>
+    <p>Balanced beats extreme for these two.</p>
+  </div>
+  <div class="legend-section">
+    <h3>The Five Factors</h3>
+    <p><strong>E</strong> Extroversion · social energy</p>
+    <p><strong>ES</strong> Emotional Stability · calm under stress</p>
+    <p><strong>A</strong> Agreeableness · warmth & cooperation</p>
+    <p><strong>C</strong> Conscientiousness · structure & discipline</p>
+    <p><strong>I</strong> Intellect · curiosity & imagination</p>
+  </div>
+</section>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All (15)</button>
+  <button class="filter-btn" data-filter="4">★ 4/5</button>
+  <button class="filter-btn" data-filter="3">3/5</button>
+  <button class="filter-btn" data-filter="2">2/5</button>
+  <button class="filter-btn" data-filter="1">1/5</button>
+  <button class="filter-btn" data-filter="0.5">0.5/5</button>
+  <button class="filter-btn" data-filter="standout">Has 2σ</button>
+  <button class="filter-btn" data-filter="contradicted">Has Contradiction</button>
+</div>
+
+<section class="roster" id="roster"></section>
+
+<footer>
+  <p class="quote">"lowkey dont know whats goin on with you guys but i agree with my results to an extent"</p>
+  <p class="credit">— Navneeth, 4/21/26 12:13 PM</p>
+</footer>
+
+<script>
+const ROSTER = [
+  {
+    name: "Navneeth",
+    alias: "first attempt",
+    rating: 0.5,
+    stats: { e: 16, es: 2, a: 25, c: 52, i: 11 },
+    summary: "Low across the board. The famous first run.",
+    quote: "lowkey dont know whats goin on with you guys but i agree with my results to an extent",
+    notes: [
+      { type: "may", text: "Very low Emotional Stability — may be more reactive to stress, more prone to anxiety/depression." },
+      { type: "may", text: "Lower Extroversion and Intellect — may prefer familiar settings and small groups." },
+      { type: "balanced", text: "Conscientiousness sits near average — solid baseline for getting stuff done." }
+    ],
+    tags: [["weak", "Most factors low"], ["balanced", "C average"]]
+  },
+  {
+    name: "Less Extremist Nav",
+    alias: "the retry",
+    rating: 3,
+    stats: { e: 74, es: 19, a: 76, c: 67, i: 70 },
+    summary: "Big swing from the first result — much more balanced profile.",
+    notes: [
+      { type: "balanced", text: "Outgoing, warm, organized, curious — all in the upper-middle zone." },
+      { type: "may", text: "Low Emotional Stability is the soft spot — may still be more reactive emotionally or struggle with sustained stress." }
+    ],
+    tags: [["balanced", "All-rounder"], ["weak", "Low ES"]]
+  },
+  {
+    name: "Jasper",
+    rating: 4,
+    stats: { e: 61, es: 79, a: 2, c: 87, i: 91 },
+    summary: "Standout intellect. Forceful with ideas.",
+    notes: [
+      { type: "standout", text: "★ Intellect (2σ) and high Conscientiousness — strong fit for ambitious, structured work." },
+      { type: "may", text: "Very low Agreeableness — may come across as forceful with opinions, less invested in social harmony, more competitive and skeptical. Team dynamics may take more effort." },
+      { type: "balanced", text: "Don't expect him to soften his takes — but the takes are usually sharp." }
+    ],
+    tags: [["standout", "2σ Intellect"], ["weak", "Low A"]]
+  },
+  {
+    name: "Lucy",
+    rating: 2,
+    stats: { e: 78, es: 16, a: 92, c: 84, i: 70 },
+    summary: "Standout warmth. Lots of strengths despite the rating.",
+    notes: [
+      { type: "standout", text: "★ Agreeableness (2σ) — very warm, cooperative, empathetic." },
+      { type: "balanced", text: "High in nearly every other factor too. Sociable, organized, curious." },
+      { type: "may", text: "Low Emotional Stability — may be more reactive to stress." }
+    ],
+    tags: [["standout", "2σ Agreeableness"], ["weak", "Low ES"]]
+  },
+  {
+    name: "Serenna",
+    alias: "initial",
+    rating: 1,
+    stats: { e: 31, es: 22, a: 76, c: 31, i: 17 },
+    summary: "Warm and agreeable, but most other factors run low.",
+    notes: [
+      { type: "may", text: "Lower Intellect — may prefer routine and familiar over novelty." },
+      { type: "may", text: "Lower Emotional Stability — may lean toward anxiety." },
+      { type: "may", text: "Lower Conscientiousness — planning may be a struggle." },
+      { type: "balanced", text: "High Agreeableness is a real strength — warmth shows up in groups." }
+    ],
+    tags: [["weak", "Multiple lows"], ["balanced", "High A"]]
+  },
+  {
+    name: "Serenna",
+    alias: "retry",
+    rating: 4,
+    stats: { e: 15, es: 52, a: 80, c: 53, i: 48 },
+    summary: "Big improvement. Most stats now average-to-good.",
+    notes: [
+      { type: "balanced", text: "Average to above-average across most factors. Solid all-rounder." },
+      { type: "may", text: "Still very low Extroversion — may feel uncomfortable in large groups, prefers smaller settings." }
+    ],
+    tags: [["balanced", "All-rounder"], ["weak", "Low E"]]
+  },
+  {
+    name: "Ellowyn",
+    rating: 3,
+    stats: { e: 13, es: 31, a: 92, c: 87, i: 65 },
+    contradicted: true,
+    summary: "Standout warmth. The friend group disproves half the chart.",
+    notes: [
+      { type: "standout", text: "★ Agreeableness (2σ) — very warm, cooperative, empathetic." },
+      { type: "may", text: "Very low Extroversion — may prefer small groups." },
+      { type: "contradiction", text: "Active in the Study Together Discord — clearly has a real support network." },
+      { type: "may", text: "Lower Emotional Stability — may be prone to anxiety or anger." },
+      { type: "contradiction", text: "Carey contradicts the long-term-relationship concern from the test." }
+    ],
+    tags: [["standout", "2σ Agreeableness"], ["balanced", "Reality > test"]]
+  },
+  {
+    name: "Don",
+    rating: 4,
+    stats: { e: 88, es: 79, a: 80, c: 36, i: 88 },
+    contradicted: true,
+    summary: "Two 2σ standouts. Goggins energy beats the chart.",
+    notes: [
+      { type: "standout", text: "★ Extroversion (2σ) and Intellect (2σ). High Emotional Stability and Agreeableness too." },
+      { type: "may", text: "Lower Conscientiousness — may suggest less grit on routine work." },
+      { type: "contradiction", text: "Goggins-style discipline contradicts that completely." }
+    ],
+    tags: [["standout", "2× 2σ"], ["balanced", "Reality > test"]]
+  },
+  {
+    name: "Hugh",
+    rating: 2,
+    stats: { e: 13, es: 34, a: 62, c: 5, i: 84 },
+    summary: "Standout imagination. Very low on routine.",
+    notes: [
+      { type: "standout", text: "★ Intellect (2σ) — strong creative and curious streak." },
+      { type: "may", text: "Very low Conscientiousness (5th %ile) — may struggle with routine, planning, structured work." },
+      { type: "may", text: "Low Extroversion — may prefer solitude." },
+      { type: "balanced", text: "Best fit: roles that reward imagination over repetition." }
+    ],
+    tags: [["standout", "2σ Intellect"], ["weak", "Very low C"]]
+  },
+  {
+    name: "Simon",
+    rating: 3,
+    stats: { e: 88, es: 39, a: 83, c: 26, i: 95 },
+    contradicted: true,
+    summary: "Three 2σ standouts. The Amazon job tells you everything.",
+    notes: [
+      { type: "standout", text: "★ Three 2σ standouts — Intellect, Extroversion, Agreeableness. Rare combo." },
+      { type: "may", text: "Lower Conscientiousness — test reads as impulsive / no plans." },
+      { type: "contradiction", text: "Holds an Amazon job — clearly capable of structure when it counts." },
+      { type: "may", text: "Lower Emotional Stability — may be more prone to anxiety." }
+    ],
+    tags: [["standout", "3× 2σ"], ["balanced", "Reality > test"]]
+  },
+  {
+    name: "Zorbline",
+    rating: 3,
+    stats: { e: 94, es: 11, a: 70, c: 20, i: 76 },
+    summary: "Maximally extroverted. Less structured.",
+    notes: [
+      { type: "standout", text: "★ Extroversion (2σ chad) and high Intellect (chode-level)." },
+      { type: "may", text: "Very low Emotional Stability — may be more reactive emotionally." },
+      { type: "may", text: "Low Conscientiousness — may lean impulsive or disorganized." },
+      { type: "balanced", text: "Highly social and curious, just less structured." }
+    ],
+    tags: [["standout", "2σ Extroversion"], ["weak", "Low ES & C"]]
+  },
+  {
+    name: "Carey",
+    alias: "refusing — C low",
+    rating: 3,
+    stats: { e: 19, es: 89, a: 71, c: 26, i: 59 },
+    contradicted: true,
+    summary: "Standout calm. Quiet but resilient.",
+    notes: [
+      { type: "standout", text: "★ Emotional Stability (2σ chad) — calm, resilient, even-keeled." },
+      { type: "may", text: "Low Extroversion — may be less assertive, more cautious socially." },
+      { type: "contradiction", text: "Test predicts no support network — Don and Mo prove that wrong." },
+      { type: "balanced", text: "Low Conscientiousness is the disputed point." }
+    ],
+    tags: [["standout", "2σ ES"], ["balanced", "Reality > test"]]
+  },
+  {
+    name: "Astropulse",
+    rating: 3,
+    stats: { e: 34, es: 48, a: 83, c: 95, i: 86 },
+    summary: "Three 2σ standouts. Watch the perfectionism.",
+    notes: [
+      { type: "standout", text: "★ Three 2σ — Agreeableness, Conscientiousness, Intellect." },
+      { type: "may", text: "Conscientiousness this high may tip into perfectionism or rigidity." },
+      { type: "may", text: "High Agreeableness — may lack assertiveness in conflict." },
+      { type: "balanced", text: "Average Extroversion and Emotional Stability — middle of the curve." }
+    ],
+    tags: [["standout", "3× 2σ"], ["weak", "May be rigid"]]
+  },
+  {
+    name: "Peter",
+    rating: 1,
+    stats: { e: 33, es: 30, a: 21, c: 31, i: 46 },
+    contradicted: true,
+    summary: "Low across most factors. Real life is more generous than the test.",
+    notes: [
+      { type: "may", text: "Low Agreeableness — may be less open to harmony when giving design feedback." },
+      { type: "may", text: "Lower Conscientiousness — test suggests impulsive/disorganized." },
+      { type: "contradiction", text: "Good GPA proves he's organized when it counts." },
+      { type: "balanced", text: "Best fit: roles with some routine and some creative latitude." }
+    ],
+    tags: [["weak", "Multiple lows"], ["balanced", "Reality > test"]]
+  },
+  {
+    name: "Annie Cao",
+    alias: "Purple Penguin",
+    rating: 4,
+    stats: { e: 13, es: 89, a: 51, c: 62, i: 65 },
+    summary: "Standout calm. Solid all-rounder despite low social score.",
+    notes: [
+      { type: "standout", text: "★ Emotional Stability (2σ) — calm and resilient." },
+      { type: "balanced", text: "Conscientiousness and Agreeableness sit at chode level — balanced, not extreme. Actually a sweet spot." },
+      { type: "may", text: "Very low Extroversion — may feel uncomfortable in big social settings." },
+      { type: "balanced", text: "No perfectionism risk, can hold ground when needed. Good profile overall." }
+    ],
+    tags: [["standout", "2σ ES"], ["balanced", "Healthy chode"]]
+  }
+];
+
+const FACTOR_LABELS = ["E", "ES", "A", "C", "I"];
+const FACTOR_KEYS = ["e", "es", "a", "c", "i"];
+
+function ratingClass(r) {
+  if (r >= 4) return "r-high";
+  if (r >= 3) return "r-mid";
+  if (r >= 2) return "r-low";
+  return "r-vlow";
+}
+
+function ratingDisplay(r) {
+  return r === 0.5 ? "0.5/5" : `${r}/5`;
+}
+
+function buildCard(p, idx) {
+  const card = document.createElement("article");
+  card.className = "card";
+  card.dataset.idx = idx;
+  card.dataset.rating = p.rating;
+  if (p.tags.some(t => t[0] === "standout")) card.dataset.standout = "true";
+  if (p.contradicted) card.dataset.contradicted = "true";
+
+  const stats = FACTOR_KEYS.map((k, i) => `
+    <div class="stat">
+      <span class="stat-label">${FACTOR_LABELS[i]}</span>
+      <div class="stat-bar"><div class="stat-fill f-${i+1}" style="width:${p.stats[k]}%"></div></div>
+      <span class="stat-val">${p.stats[k]}</span>
+    </div>
+  `).join("");
+
+  const tags = p.tags.map(([cls, txt]) => `<span class="tag ${cls}">${txt}</span>`).join("");
+
+  const notesHtml = p.notes.map(n => {
+    if (n.type === "contradiction") return `<li><span class="contradiction">↺ Reality check:</span> ${n.text}</li>`;
+    if (n.type === "may") return `<li><span class="may">may</span> · ${n.text}</li>`;
+    if (n.type === "standout") return `<li>${n.text}</li>`;
+    return `<li>${n.text}</li>`;
+  }).join("");
+
+  const quote = p.quote ? `<blockquote>"${p.quote}"</blockquote>` : "";
+
+  card.innerHTML = `
+    <button class="close-btn" aria-label="close">×</button>
+    <div class="card-top">
+      <div>
+        <div class="card-name">${p.name}${p.alias ? `<span class="alias">${p.alias}</span>` : ""}</div>
+      </div>
+      <div class="rating ${ratingClass(p.rating)}">${ratingDisplay(p.rating)}</div>
+    </div>
+    <div class="stats">${stats}</div>
+    <div class="card-summary">${p.summary}</div>
+    <div class="tags">${tags}</div>
+    <div class="card-detail">
+      <div class="detail-grid">
+        <div class="detail-section">
+          <h4>The Read</h4>
+          <ul>${notesHtml}</ul>
+        </div>
+        ${quote ? `<div class="detail-section"><h4>On Record</h4>${quote}</div>` : ""}
+      </div>
+    </div>
+  `;
+
+  card.addEventListener("click", (e) => {
+    if (e.target.classList.contains("close-btn")) {
+      card.classList.remove("expanded");
+      return;
+    }
+    if (card.classList.contains("expanded")) return;
+    document.querySelectorAll(".card.expanded").forEach(c => c.classList.remove("expanded"));
+    card.classList.add("expanded");
+    setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
+  });
+
+  return card;
+}
+
+const roster = document.getElementById("roster");
+ROSTER.forEach((p, i) => roster.appendChild(buildCard(p, i)));
+
+// Filtering
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.filter;
+    document.querySelectorAll(".card").forEach(card => {
+      card.classList.remove("expanded");
+      let show = false;
+      if (f === "all") show = true;
+      else if (f === "standout") show = card.dataset.standout === "true";
+      else if (f === "contradicted") show = card.dataset.contradicted === "true";
+      else show = card.dataset.rating === f;
+      card.style.display = show ? "" : "none";
+    });
+  });
+});
+</script>
+</body>
+</html>
